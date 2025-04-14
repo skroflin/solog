@@ -183,18 +183,30 @@ pub mod solog {
 }
 
 #[derive(Accounts)]
-pub struct InitializeSolog<'info> {
-  #[account(mut)]
-  pub payer: Signer<'info>,
+#[instruction(product_id: String, name: String, description: String, initial_notes: String)]
+pub struct CreateProduct<'info> {
+  #[account(
+    init,
+    payer = creator,
+    space = 8 + ProductState::INIT_SPACE,
+    seeds = [b"product", product_id.as_bytes()],
+    bump
+  )]
+  pub product: Account<'info, ProductState>,
 
   #[account(
   init,
-  space = 8 + Solog::INIT_SPACE,
-  payer = payer
+  payer = creator,
+  space = 8 + JournalEntryState::INIT_SPACE,
+  seeds = [b"journal", product.key().as_ref(), &[0]],
+  bump
   )]
-  pub solog: Account<'info, Solog>,
+  pub journal_entry: Account<'info, JournalEntryState>,
+  #[account(mut)]
+  pub creator: Signer<'info>,
   pub system_program: Program<'info, System>,
 }
+
 #[derive(Accounts)]
 pub struct CloseSolog<'info> {
   #[account(mut)]
