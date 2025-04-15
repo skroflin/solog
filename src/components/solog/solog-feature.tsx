@@ -1,11 +1,10 @@
 'use client'
-
 import { useWallet } from '@solana/wallet-adapter-react'
 import { WalletButton } from '../solana/solana-provider'
 import { AppHero, ellipsify } from '../ui/ui-layout'
 import { ExplorerLink } from '../cluster/cluster-ui'
 import { useSologProgram } from './solog-data-access'
-import { SologCreate, SologList } from './solog-ui'
+import { CreateProductForm, ProductList } from './solog-ui'
 
 export default function SologFeature() {
   const { publicKey } = useWallet()
@@ -14,17 +13,21 @@ export default function SologFeature() {
   return publicKey ? (
     <div>
       <AppHero
-        title="Solog"
+        title="Supply Chain Tracking"
         subtitle={
-          'Create a new account by clicking the "Create" button. The state of a account is stored on-chain and can be manipulated by calling the program\'s methods (increment, decrement, set, and close).'
+          'Create new products and track them through the supply chain. Add journal entries, transfer ownership, mark as delivered, or deactivate products when they complete their lifecycle.'
         }
       >
         <p className="mb-6">
           <ExplorerLink path={`account/${programId}`} label={ellipsify(programId.toString())} />
         </p>
-        <SologCreate />
       </AppHero>
-      <SologList />
+      
+      <div className="max-w-4xl mx-auto mb-10">
+        <CreateProductForm />
+      </div>
+      
+      <ProductList />
     </div>
   ) : (
     <div className="max-w-4xl mx-auto">
