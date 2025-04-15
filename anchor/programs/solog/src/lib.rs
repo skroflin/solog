@@ -13,6 +13,7 @@ pub mod solog {
     product_id: String,
     name: String,
     description: String,
+    initial_notes: String,
   ) -> Result<()> {
     msg!("New product created in the supply chain");
     msg!("Product id: {}", product_id);
@@ -59,7 +60,7 @@ pub mod solog {
     let handler = &ctx.accounts.handler;
 
     require!(
-      product.current_owner == handler.key();
+      product.current_owner == handler.key(),
       SupplyChainError::Unauthorized
     );
 
@@ -73,8 +74,8 @@ pub mod solog {
     journal_entry.timestamp = Clock::get()?.unix_timestamp;
     journal_entry.title = title;
     journal_entry.message = message;
-    journal_entry.status = status;
-    journal_entry.location = new location;
+    journal_entry.status = new_status;
+    journal_entry.location = new_location;
     journal_entry.entry_number = product.journal_entries_count - 1;
 
     Ok(())
@@ -111,7 +112,7 @@ pub mod solog {
     journal_entry.location = new_location;
     journal_entry.entry_number = product.journal_entries_count - 1;
 
-    ok(())
+    Ok(())
   }
 
   pub fn mark_delivered(
@@ -157,7 +158,7 @@ pub mod solog {
     msg!("Reason: {}", reason);
 
     let product = &mut ctx.accounts.product;
-    let handler &ctx.accounts.handler;
+    let handler = &ctx.accounts.handler;
 
     require!(
       product.current_owner == handler.key(),
@@ -195,11 +196,11 @@ pub struct CreateProduct<'info> {
   pub product: Account<'info, ProductState>,
 
   #[account(
-  init,
-  payer = creator,
-  space = 8 + JournalEntryState::INIT_SPACE,
-  seeds = [b"journal", product.key().as_ref(), &[0]],
-  bump
+    init,
+    payer = creator,
+    space = 8 + JournalEntryState::INIT_SPACE,
+    seeds = [b"journal", product.key().as_ref(), &[0]],
+    bump
   )]
   pub journal_entry: Account<'info, JournalEntryState>,
   #[account(mut)]
@@ -224,13 +225,13 @@ pub struct AddJournalEntry<'info> {
       b"journal",
       product.key().as_ref(),
       &[product.journal_entries_count]
-    ]
-    bump,
+    ],
+    bump
   )]
   pub journal_entry: Account<'info, JournalEntryState>,
 
   #[account(mut)]
-  pub: handler: Signer<'info>,
+  pub handler: Signer<'info>,
   pub system_program: Program<'info, System>,
 }
 
@@ -260,6 +261,8 @@ pub struct TransferProduct<'info> {
 
   #[account(mut)]
   pub current_owner: Signer<'info>,
+  
+  /// CHECK: This is the new owner's address, we're just storing it and don't need to validate it
   pub new_owner: AccountInfo<'info>,
   pub system_program: Program<'info, System>,
 }
