@@ -208,27 +208,84 @@ pub struct CreateProduct<'info> {
 }
 
 #[derive(Accounts)]
-pub struct CloseSolog<'info> {
-  #[account(mut)]
-  pub payer: Signer<'info>,
+#[instruction(title: String, message: String, new_status: String, new_location: String)]
+pub struct AddJournalEntry<'info> {
+  #[account(
+    mut,
+    constraint = product.is_active @ SupplyChainError::ProductInactive
+  )]
+  pub product: Account<'info, ProductState>,
 
   #[account(
-  mut,
-  close = payer, // close account and return lamports to payer
+    init,
+    payer = handler,
+    space = 8 + JournalEntryState::INIT_SPACE,
+    seeds = [
+      b"journal",
+      product.key().as_ref(),
+      &[product.journal_entries_count]
+    ]
+    bump,
   )]
-  pub solog: Account<'info, Solog>,
+  pub journal_entry: Account<'info, JournalEntryState>,
+
+  #[account(mut)]
+  pub: handler: Signer<'info>,
+  pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
-pub struct Update<'info> {
+#[instruction(title: String, message: String, new_location: String)]
+pub struct TransferProduct<'info> {
+  #[account(
+    mut,
+    constraint = product.is_active @ SupplyChainError::ProductInactive,
+    constraint = product.current_owner == current_owner.key() @ SupplyChainError::Unauthorized
+  )]
+  pub product: Account<'info, ProductState>,
+
+  #[account(
+    init,
+    payer = current_owner,
+    space = 8 + JournalEntryState::INIT_SPACE,
+    seeds = [
+      b"journal",
+      product.key().as_ref(),
+      &[product.journal_entries_count]
+    ],
+    bump
+  )]
+
+  pub journal_entry: Account<'info, JournalEntryState>,
+
   #[account(mut)]
-  pub solog: Account<'info, Solog>,
+  pub current_owner: Signer<'info>,
+  pub new_owner: AccountInfo<'info>,
+  pub system_program: Program<'info, System>,
 }
 
-#[account]
-#[derive(InitSpace)]
-pub struct Solog {
-  count: u8,
+#[derive(Accounts)]
+#[instruction(title: String, message: String)]
+pub struct UpdateProductStatus<'info> {
+  #[account(mut)]
+  pub product: Account<'info, ProductState>,
+
+  #[account(
+    init,
+    payer = handler,
+    space = 8 + JournalEntryState::INIT_SPACE,
+    seeds = [
+      b"journal",
+      product.key().as_ref(),
+      &[product.journal_entries_count]
+    ],
+    bump
+  )]
+  pub journal_entry: Account<'info, JournalEntryState>,
+
+  #[account(mut)]
+  pub handler: Signer<'info>,
+  pub system_program: Program<'info, System>,
 }
 
 #[account]
