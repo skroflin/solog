@@ -8,6 +8,10 @@
 
 # testing
 /coverage
+anchor/test-ledger/
+**/test-ledger/
+**/*.log
+**/*.st
 
 # next.js
 /.next/
