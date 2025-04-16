@@ -8,6 +8,9 @@ skip-lint = false
 [programs.localnet]
 solog = "2gb8Z8KSrFahAnHzhZpZiwDTsJkG9PRhxbm7hCuPJEV5"
 
+[programs.devnet]
+solog = "2gb8Z8KSrFahAnHzhZpZiwDTsJkG9PRhxbm7hCuPJEV5"
+
 [registry]
 url = "https://api.apr.dev"
 

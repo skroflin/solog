@@ -56,7 +56,7 @@ export function useSologProgram() {
           product: productPDA,
           journalEntry: journalPDA,
           creator: provider.publicKey,
-          systemProgram: PublicKey.default,
+          systemProgram: PublicKey.programId,
         })
         .rpc()
     },
@@ -140,7 +140,7 @@ export function useProductAccount({ productId }: { productId: string }) {
           product: productPDA,
           journalEntry: journalPDA,
           handler: provider.publicKey,
-          systemProgram: PublicKey.default,
+          systemProgram: PublicKey.programId,
         })
         .rpc()
     },
@@ -177,7 +177,7 @@ export function useProductAccount({ productId }: { productId: string }) {
           journalEntry: journalPDA,
           currentOwner: provider.publicKey,
           newOwner: newOwner,
-          systemProgram: PublicKey.default,
+          systemProgram: PublicKey.programId,
         })
         .rpc()
     },
@@ -211,7 +211,7 @@ export function useProductAccount({ productId }: { productId: string }) {
           product: productPDA,
           journalEntry: journalPDA,
           handler: provider.publicKey,
-          systemProgram: PublicKey.default,
+          systemProgram: PublicKey.programId,
         })
         .rpc()
     },
@@ -245,7 +245,7 @@ export function useProductAccount({ productId }: { productId: string }) {
           product: productPDA,
           journalEntry: journalPDA,
           handler: provider.publicKey,
-          systemProgram: PublicKey.default,
+          systemProgram: PublicKey.programId,
         })
         .rpc()
     },
