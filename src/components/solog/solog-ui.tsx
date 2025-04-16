@@ -33,7 +33,7 @@ export function CreateProductForm() {
   }
 
   return (
-    <div className="card card-bordered border-base-300 border-4 p-4">
+    <div className="card card-bordered border-base-300 border-4 p-4 mb-4">
       <h2 className="text-2xl font-bold mb-4">Create New Product</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="form-control">
@@ -152,7 +152,7 @@ function ProductCard({ productId, productPDA, data }: {
   const product = useMemo(() => productQuery.data || data, [productQuery.data, data])
 
   return (
-    <div className="card card-bordered border-base-300 border-4 text-neutral-content">
+    <div className="card card-bordered border-base-300 border-4 text-neutral-content mb-8">
       <div className="card-body">
         <h2 className="card-title">{product.name}</h2>
         <div className="badge badge-primary">{product.currentStatus}</div>
