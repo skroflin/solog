@@ -1,24 +1,30 @@
 'use client'
-
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'
 import { ReactNode, Suspense, useEffect, useRef } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-
 import { AccountChecker } from '../account/account-ui'
 import { ClusterChecker, ClusterUiSelect, ExplorerLink } from '../cluster/cluster-ui'
 import { WalletButton } from '../solana/solana-provider'
+import BlockchainSupplyChainLogoS from '../logo/logo'
 
-export function UiLayout({ children, links }: { children: ReactNode; links: { label: string; path: string }[] }) {
+export function UiLayout({ 
+  children, 
+  links, 
+  logo = <BlockchainSupplyChainLogoS className="h-8 w-auto text-primary" />
+}: { 
+  children: ReactNode; 
+  links: { label: string; path: string }[];
+  logo?: ReactNode;
+}) {
   const pathname = usePathname()
-
   return (
     <div className="h-full flex flex-col">
       <div className="navbar bg-base-300 dark:text-neutral-content flex-col md:flex-row space-y-2 md:space-y-0">
         <div className="flex-1">
           <Link className="btn btn-ghost normal-case text-xl" href="/">
-            Solog
+            {logo}
           </Link>
           <ul className="menu menu-horizontal px-1 space-x-2">
             {links.map(({ label, path }) => (
@@ -72,7 +78,6 @@ export function AppModal({
   submitLabel?: string
 }) {
   const dialogRef = useRef<HTMLDialogElement | null>(null)
-
   useEffect(() => {
     if (!dialogRef.current) return
     if (show) {
@@ -81,7 +86,6 @@ export function AppModal({
       dialogRef.current.close()
     }
   }, [show, dialogRef])
-
   return (
     <dialog className="modal" ref={dialogRef}>
       <div className="modal-box space-y-5">

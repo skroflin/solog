@@ -2,6 +2,7 @@
 import { AppHero } from '../ui/ui-layout'
 import { useState } from 'react'
 import Link from 'next/link'
+import BlockchainSupplyChainLogo from '../logo/logo'
 
 const features: { title: string; description: string; icon: string }[] = [
   { 
@@ -97,14 +98,12 @@ export default function DashboardFeature() {
           <div className="space-y-8">
             <div className="hero bg-base-200 rounded-box p-6">
               <div className="hero-content flex-col lg:flex-row">
-                <img 
-                  src="/blockchain-supply-chain.svg" 
-                  className="max-w-sm rounded-lg shadow-2xl" 
-                  alt="Blockchain Supply Chain"
-                  onError={(e) => {
-                    e.currentTarget.src = "https://placehold.co/600x400?text=Solog";
-                  }}
-                />
+              <div className="max-w-sm rounded-lg shadow-2xl overflow-hidden">
+                  <BlockchainSupplyChainLogo 
+                    className="w-full h-auto" 
+                    aria-label="Blockchain Supply Chain" 
+                  />
+                </div>
                 <div>
                   <h1 className="text-3xl font-bold">Transforming Supply Chains with Blockchain</h1>
                   <p className="py-6">
@@ -126,6 +125,7 @@ export default function DashboardFeature() {
               <div className="card bg-base-100 shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title">The Problem</h2>
+                  <hr />
                   <p>Traditional supply chains suffer from limited visibility, execution errors, and coordination challenges across multiple parties.</p>
                   <ul className="list-disc pl-5 mt-2 space-y-1">
                     <li>Difficult to trace products from source to consumer</li>
@@ -139,6 +139,7 @@ export default function DashboardFeature() {
               <div className="card bg-primary text-primary-content shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title">The Solution</h2>
+                  <hr />
                   <p>Solog leverages Solana blockchain to create a shared, immutable record of all supply chain activities.</p>
                   <ul className="list-disc pl-5 mt-2 space-y-1">
                     <li>Complete product traceability from origin to consumer</li>
@@ -152,6 +153,7 @@ export default function DashboardFeature() {
               <div className="card bg-base-100 shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title">Why Solana?</h2>
+                  <hr />
                   <p>Solana provides the perfect foundation for supply chain management with:</p>
                   <ul className="list-disc pl-5 mt-2 space-y-1">
                     <li>High throughput (65,000+ TPS)</li>
@@ -208,7 +210,7 @@ export default function DashboardFeature() {
                   <p className="text-sm">Verify product authenticity and history at any point</p>
                 </div>
               </div>
-              <div className="step">
+              <div className="step step-secondary">
                 <div className="text-center px-4">
                   <h3 className="font-bold">Delivery & Completion</h3>
                   <p className="text-sm">Mark products as delivered and maintain complete history</p>
@@ -234,23 +236,32 @@ export default function DashboardFeature() {
             </div>
 
             <div className="mt-12 bg-base-200 p-6 rounded-box">
-              <h3 className="text-xl font-bold mb-4">Real-World Applications</h3>
+              <h3 className="text-xl font-bold mb-4 divider">Real-World Applications</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="card bg-base-100">
                   <div className="card-body">
-                    <h3 className="card-title text-lg">Pharmaceutical Industry</h3>
+                    <h3 className="card-title text-lg">
+                      <span className="text-2xl mr-2" role="img" aria-label="Pharmaceutical">💊</span>
+                      Pharmaceutical Industry
+                    </h3>
                     <p>Track prescription drugs to protect consumers from counterfeit, stolen, or harmful products.</p>
                   </div>
                 </div>
                 <div className="card bg-base-100">
                   <div className="card-body">
-                    <h3 className="card-title text-lg">Food Supply</h3>
+                    <h3 className="card-title text-lg">
+                      <span className="text-2xl mr-2" role="img" aria-label="Food">🍎</span>
+                      Food Supply
+                    </h3>
                     <p>Trace fresh produce and food products to ensure safety and reduce waste.</p>
                   </div>
                 </div>
                 <div className="card bg-base-100">
                   <div className="card-body">
-                    <h3 className="card-title text-lg">Manufacturing</h3>
+                    <h3 className="card-title text-lg">
+                      <span className="text-2xl mr-2" role="img" aria-label="Manufacturing">🏭</span>
+                      Manufacturing
+                    </h3>
                     <p>Manage complex supply chains with thousands of components across many suppliers and locations.</p>
                   </div>
                 </div>
@@ -267,70 +278,36 @@ export default function DashboardFeature() {
         {activeTab === 'getstarted' && (
           <div>
             <h2 className="text-2xl font-bold text-center mb-8">Getting Started with Solog</h2>
-            
-            <div className="steps steps-vertical w-full mb-8">
-              <div className="step step-primary">
-                <div className="ml-4">
-                  <h3 className="font-bold">Connect Your Wallet</h3>
-                  <p className="text-sm">Connect your Solana wallet to access the Solog platform</p>
-                </div>
-              </div>
-              <div className="step step-primary">
-                <div className="ml-4">
-                  <h3 className="font-bold">Create a Product</h3>
-                  <p className="text-sm">Add your first product to the blockchain with details and description</p>
-                </div>
-              </div>
-              <div className="step step-primary">
-                <div className="ml-4">
-                  <h3 className="font-bold">Add Journal Entries</h3>
-                  <p className="text-sm">Record status updates, location changes, and other important events</p>
-                </div>
-              </div>
-              <div className="step">
-                <div className="ml-4">
-                  <h3 className="font-bold">Transfer Ownership</h3>
-                  <p className="text-sm">Transfer product ownership to the next participant in your supply chain</p>
-                </div>
-              </div>
-            </div>
 
             <div className="flex flex-col md:flex-row gap-6 mt-8">
               <div className="flex-1">
-                <div className="card bg-base-100 shadow-xl h-full">
-                  <div className="card-body">
-                    <h2 className="card-title">Resources</h2>
-                    <ul className="space-y-2">
-                      <li>
-                        <a href="https://docs.solana.com/" className="link link-primary" target="_blank" rel="noopener noreferrer">
-                          Solana Documentation
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://solanacookbook.com/" className="link link-primary" target="_blank" rel="noopener noreferrer">
-                          Solana Cookbook
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://solana.stackexchange.com/" className="link link-primary" target="_blank" rel="noopener noreferrer">
-                          Solana Stack Exchange
-                        </a>
-                      </li>
-                      <li>
-                      <a href="https://github.com/solana-developers/" className="link link-primary" target="_blank" rel="noopener noreferrer">
-                          Solana Developers GitHub
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://faucet.solana.com/" className="link link-primary" target="_blank" rel="noopener noreferrer">
-                          Solana Faucet (Devnet)
-                        </a>
-                      </li>
-                    </ul>
+                <div className="steps steps-vertical w-full mb-8">
+                  <div className="step step-primary">
+                    <div className="ml-4">
+                      <h3 className="font-bold">Connecting Your Wallet</h3>
+                      <p className="text-sm">Connect your Solana wallet to access the Solog platform</p>
+                    </div>
+                  </div>
+                  <div className="step step-primary">
+                    <div className="ml-4">
+                      <h3 className="font-bold">Create a Product</h3>
+                      <p className="text-sm">Add your first product to the blockchain with details and description</p>
+                    </div>
+                  </div>
+                  <div className="step step-primary">
+                    <div className="ml-4">
+                      <h3 className="font-bold">Add Journal Entries</h3>
+                      <p className="text-sm">Record status updates, location changes, and other important events</p>
+                    </div>
+                  </div>
+                  <div className="step step-secondary">
+                    <div className="ml-4">
+                      <h3 className="font-bold">Transfer Ownership</h3>
+                      <p className="text-sm">Transfer product ownership to the next participant in your supply chain</p>
+                    </div>
                   </div>
                 </div>
               </div>
-
               <div className="flex-1">
                 <div className="card bg-primary text-primary-content shadow-xl h-full">
                   <div className="card-body">
@@ -357,48 +334,6 @@ export default function DashboardFeature() {
             "A blockchain is valuable partly because it comprises a chronological string of blocks integrating all three types of flows in the transaction and captures details that aren't recorded in a financial-ledger system."
           </blockquote>
           <p className="text-right mt-4">— Harvard Business Review</p>
-        </div>
-
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold text-center mb-8">How Solog Addresses Supply Chain Challenges</h2>
-          <div className="overflow-x-auto">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th>Challenge</th>
-                  <th>Traditional Approach</th>
-                  <th>Solog Blockchain Solution</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Product Traceability</td>
-                  <td>Fragmented systems, limited visibility</td>
-                  <td>Complete, immutable record from origin to consumer</td>
-                </tr>
-                <tr>
-                  <td>Data Integrity</td>
-                  <td>Vulnerable to manipulation and errors</td>
-                  <td>Cryptographically secured, tamperproof records</td>
-                </tr>
-                <tr>
-                  <td>Coordination</td>
-                  <td>Manual reconciliation between parties</td>
-                  <td>Shared, real-time view of supply chain activities</td>
-                </tr>
-                <tr>
-                  <td>Dispute Resolution</td>
-                  <td>Time-consuming investigation process</td>
-                  <td>Complete audit trail with verifiable timestamps</td>
-                </tr>
-                <tr>
-                  <td>Financing</td>
-                  <td>Limited visibility for lenders</td>
-                  <td>Verified transaction data improves lending decisions</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </div>
