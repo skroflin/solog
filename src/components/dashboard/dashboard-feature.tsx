@@ -1,39 +1,39 @@
 'use client'
-import { AppHero } from '../ui/ui-layout'
 import { useState } from 'react'
 import Link from 'next/link'
-import BlockchainSupplyChainLogo from '../logo/logo'
+import sologLogo from '../../../public/images/solog-logo.svg'
+import Image from 'next/image'
 
 const features: { title: string; description: string; icon: string }[] = [
-  { 
-    title: "Enhanced Traceability", 
-    description: "Track products from source to consumer with immutable blockchain records, eliminating counterfeit goods and ensuring authenticity.", 
-    icon: "📦" 
+  {
+    title: "Enhanced Traceability",
+    description: "Track products from source to consumer with immutable blockchain records, eliminating counterfeit goods and ensuring authenticity.",
+    icon: "📦"
   },
-  { 
-    title: "Transparent Supply Chain", 
-    description: "Create a shared, tamperproof ledger that connects inventory, information, and financial flows across all supply chain participants.", 
-    icon: "🔍" 
+  {
+    title: "Transparent Supply Chain",
+    description: "Create a shared, tamperproof ledger that connects inventory, information, and financial flows across all supply chain participants.",
+    icon: "🔍"
   },
-  { 
-    title: "Reduced Execution Errors", 
-    description: "Eliminate mistakes in inventory data, missing shipments, and duplicate payments with real-time verification and blockchain validation.", 
-    icon: "✓" 
+  {
+    title: "Reduced Execution Errors",
+    description: "Eliminate mistakes in inventory data, missing shipments, and duplicate payments with real-time verification and blockchain validation.",
+    icon: "✓"
   },
-  { 
-    title: "Streamlined Operations", 
-    description: "Automate supply chain processes with smart contracts that trigger actions when predefined conditions are met.", 
-    icon: "⚙️" 
+  {
+    title: "Streamlined Operations",
+    description: "Automate supply chain processes with smart contracts that trigger actions when predefined conditions are met.",
+    icon: "⚙️"
   },
-  { 
-    title: "Dispute Resolution", 
-    description: "Resolve conflicts quickly with a complete, trustworthy audit trail of all supply chain activities.", 
-    icon: "🤝" 
+  {
+    title: "Dispute Resolution",
+    description: "Resolve conflicts quickly with a complete, trustworthy audit trail of all supply chain activities.",
+    icon: "🤝"
   },
-  { 
-    title: "Improved Financing", 
-    description: "Enable better lending decisions and faster access to capital with verified transaction data.", 
-    icon: "💰" 
+  {
+    title: "Improved Financing",
+    description: "Enable better lending decisions and faster access to capital with verified transaction data.",
+    icon: "💰"
   },
 ]
 
@@ -61,32 +61,38 @@ export default function DashboardFeature() {
 
   return (
     <div>
-      <AppHero 
-        title="Solog" 
-        subtitle="Blockchain-Powered Supply Chain Management on Solana" 
-      />
-      
+      <div className="flex justify-center items-center p-0 mt-16 mb-8">
+        <div className="h-48 w-64 relative">
+          <Image
+            alt='Solog Logo'
+            priority
+            src={sologLogo}
+            layout='fill'
+            objectFit='contain'
+          />
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div className="tabs tabs-boxed justify-center mb-8">
-          <a 
+          <a
             className={`tab ${activeTab === 'overview' ? 'tab-active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
             Overview
           </a>
-          <a 
+          <a
             className={`tab ${activeTab === 'features' ? 'tab-active' : ''}`}
             onClick={() => setActiveTab('features')}
           >
             Features
           </a>
-          <a 
+          <a
             className={`tab ${activeTab === 'benefits' ? 'tab-active' : ''}`}
             onClick={() => setActiveTab('benefits')}
           >
             Benefits
           </a>
-          <a 
+          <a
             className={`tab ${activeTab === 'getstarted' ? 'tab-active' : ''}`}
             onClick={() => setActiveTab('getstarted')}
           >
@@ -98,22 +104,16 @@ export default function DashboardFeature() {
           <div className="space-y-8">
             <div className="hero bg-base-200 rounded-box p-6">
               <div className="hero-content flex-col lg:flex-row">
-              <div className="max-w-sm rounded-lg shadow-2xl overflow-hidden">
-                  <BlockchainSupplyChainLogo 
-                    className="w-full h-auto" 
-                    aria-label="Blockchain Supply Chain" 
-                  />
-                </div>
                 <div>
                   <h1 className="text-3xl font-bold">Transforming Supply Chains with Blockchain</h1>
                   <p className="py-6">
-                    Solog is a decentralized supply chain management system built on the Solana blockchain. 
-                    It creates a distributed, verifiable, and tamperproof ledger for recording transactions 
+                    Solog is a decentralized supply chain management system built on the Solana blockchain.
+                    It creates a distributed, verifiable, and tamperproof ledger for recording transactions
                     among multiple parties in your supply chain.
                   </p>
                   <p className="py-2">
-                    Unlike traditional ERP systems that struggle with visibility in complex supply chains, 
-                    Solog provides a complete audit trail integrating information flows, inventory flows, 
+                    Unlike traditional ERP systems that struggle with visibility in complex supply chains,
+                    Solog provides a complete audit trail integrating information flows, inventory flows,
                     and financial flows in one secure platform.
                   </p>
                   <Link href="/products/new" className="btn btn-primary mt-4">Create Your First Product</Link>
@@ -223,7 +223,7 @@ export default function DashboardFeature() {
         {activeTab === 'benefits' && (
           <div>
             <h2 className="text-2xl font-bold text-center mb-8">Benefits for Supply Chain Stakeholders</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {benefits.map((benefit, index) => (
                 <div key={index} className="card bg-base-100 shadow-xl">

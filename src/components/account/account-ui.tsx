@@ -15,6 +15,7 @@ import {
   useRequestAirdrop,
   useTransferSol,
 } from './account-data-access'
+import toast from 'react-hot-toast'
 
 export function AccountBalance({ address }: { address: PublicKey }) {
   const query = useGetBalance({ address })
@@ -50,7 +51,7 @@ export function AccountBalanceCheck({ address }: { address: PublicKey }) {
         </span>
         <button
           className="btn btn-xs btn-neutral"
-          onClick={() => mutation.mutateAsync(1).catch((err) => console.log(err))}
+          onClick={() => mutation.mutateAsync(1).catch((err) => toast.error(err))}
         >
           Request Airdrop
         </button>

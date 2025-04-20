@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation'
 import { ExplorerLink } from '../cluster/cluster-ui'
 import { AppHero, ellipsify } from '../ui/ui-layout'
 import { AccountBalance, AccountButtons, AccountTokens, AccountTransactions } from './account-ui'
+import { toast } from 'react-hot-toast'
 
 export default function AccountDetailFeature() {
   const params = useParams()

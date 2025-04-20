@@ -8,6 +8,7 @@ import { TransferOwnershipForm } from './transfer-ownership-form'
 import { MarkDeliveredForm } from './mark-delivered-form'
 import { DeactivateProductForm } from './deactivate-product-form'
 import { QRCodeSVG } from 'qrcode.react'
+import { toast } from 'react-hot-toast'
 
 export function ProductDetails({ productId }: { productId: string }) {
   const {
@@ -267,7 +268,16 @@ export function ProductDetails({ productId }: { productId: string }) {
           <div className="mt-4">
             <button 
               className="btn btn-outline btn-primary"
-              onClick={() => alert("Ownership Certificate feature will be implemented soon!")}
+              onClick={() => toast("Ownership Certificate feature will be implemented soon!", {
+                position: "top-center",
+                duration: 5000,
+                style: {
+                  borderRadius: '10px',
+                  background: '#333',
+                  color: '#fff',
+                  fontWeight: 'bold',
+                }
+              })}
             >
               Download Ownership Certificate
             </button>
