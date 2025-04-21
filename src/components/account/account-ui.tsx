@@ -16,6 +16,8 @@ import {
   useTransferSol,
 } from './account-data-access'
 import toast from 'react-hot-toast'
+import Image from 'next/image'
+import loadingLogoMini from '../../../public/images/loading-final-mini.svg'
 
 export function AccountBalance({ address }: { address: PublicKey }) {
   const query = useGetBalance({ address })
@@ -109,10 +111,17 @@ export function AccountTokens({ address }: { address: PublicKey }) {
     <div className="space-y-2">
       <div className="justify-between">
         <div className="flex justify-between">
-          <h2 className="text-2xl font-bold">Token Accounts</h2>
+          <h2 className="text-2xl font-bold pr-4">Token Accounts</h2>
           <div className="space-x-2">
             {query.isLoading ? (
-              <span className="loading loading-spinner"></span>
+              <span>
+                <div className="w-14 h-auto">
+                  <Image
+                    src={loadingLogoMini}
+                    alt='Loading Logo Mini'
+                  />
+                </div>
+              </span>
             ) : (
               <button
                 className="btn btn-sm btn-outline"
@@ -199,10 +208,17 @@ export function AccountTransactions({ address }: { address: PublicKey }) {
   return (
     <div className="space-y-2">
       <div className="flex justify-between">
-        <h2 className="text-2xl font-bold">Transaction History</h2>
+        <h2 className="text-2xl font-bold pr-4">Transaction History</h2>
         <div className="space-x-2">
           {query.isLoading ? (
-            <span className="loading loading-spinner"></span>
+            <span>
+              <div className="w-14 h-auto">
+                <Image
+                  src={loadingLogoMini}
+                  alt='Loading Logo Mini'
+                />
+              </div>
+            </span>
           ) : (
             <button className="btn btn-sm btn-outline" onClick={() => query.refetch()}>
               <IconRefresh size={16} />

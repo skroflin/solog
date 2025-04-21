@@ -7,6 +7,8 @@ import { ReactNode, useState } from 'react'
 import { AppModal } from '../ui/ui-layout'
 import { ClusterNetwork, useCluster } from './cluster-data-access'
 import { Connection } from '@solana/web3.js'
+import Image from 'next/image'
+import loadingLogo from '../../../public/images/loading-final.svg'
 
 export function ExplorerLink({ path, label, className }: { path: string; label: string; className?: string }) {
   const { getExplorerUrl } = useCluster()

@@ -9,13 +9,15 @@ import { MarkDeliveredForm } from './mark-delivered-form'
 import { DeactivateProductForm } from './deactivate-product-form'
 import { QRCodeSVG } from 'qrcode.react'
 import { toast } from 'react-hot-toast'
+import Image from 'next/image'
+import loadingLogo from '../../../public/images/loading-final.svg'
 
 export function ProductDetails({ productId }: { productId: string }) {
   const {
     productQuery,
     productJournalEntries
   } = useProductAccount({ productId })
-  
+
   const [isDisputeOpen, setIsDisputeOpen] = useState(false)
   const [disputeData, setDisputeData] = useState({
     title: '',
@@ -24,7 +26,18 @@ export function ProductDetails({ productId }: { productId: string }) {
   })
 
   if (productQuery.isLoading) {
-    return <span className="loading loading-spinner loading-lg"></span>
+    return (
+      <span>
+        <div className="flex justify-center items-center">
+          <div className='w-96 h-auto'>
+            <Image
+              src={loadingLogo}
+              alt='Loading Logo'
+            />
+          </div>
+        </div>
+      </span>
+    )
   }
 
   if (!productQuery.data) {
@@ -84,7 +97,7 @@ export function ProductDetails({ productId }: { productId: string }) {
   }
 
   const getStatusColor = (status: string) => {
-    switch(status.toLowerCase()) {
+    switch (status.toLowerCase()) {
       case 'delivered': return 'badge-success'
       case 'in transit': return 'badge-warning'
       case 'processing': return 'badge-info'
@@ -113,7 +126,7 @@ export function ProductDetails({ productId }: { productId: string }) {
               </ul>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div>
               <h3 className="font-bold">Product Details</h3>
@@ -133,16 +146,16 @@ export function ProductDetails({ productId }: { productId: string }) {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h3 className="font-bold">Ownership Information</h3>
               <div className="mt-4 space-y-2">
                 <div>
                   <span className="font-bold">Current Owner:</span>
                   <div className="mt-1">
-                    <ExplorerLink 
-                      path={`account/${product.currentOwner}`} 
-                      label={ellipsify(product.currentOwner.toString())} 
+                    <ExplorerLink
+                      path={`account/${product.currentOwner}`}
+                      label={ellipsify(product.currentOwner.toString())}
                     />
                   </div>
                 </div>
@@ -190,7 +203,7 @@ export function ProductDetails({ productId }: { productId: string }) {
                         <div className="badge badge-outline">{entry.account.location}</div>
                       </div>
                     </div>
-                    {index !== productJournalEntries.data.length - 1 && <hr/>}
+                    {index !== productJournalEntries.data.length - 1 && <hr />}
                   </li>
                 ))}
               </ul>
@@ -202,7 +215,7 @@ export function ProductDetails({ productId }: { productId: string }) {
       <div className="card card-bordered border-base-300 border-4 bg-base-100">
         <div className="card-body">
           <h2 className="card-title">Journal Entries</h2>
-          
+
           {productJournalEntries.isLoading ? (
             <span className="loading loading-spinner loading-lg"></span>
           ) : productJournalEntries.data?.length ? (
@@ -234,9 +247,9 @@ export function ProductDetails({ productId }: { productId: string }) {
                       <td>{entry.account.location}</td>
                       <td>{new Date(entry.account.timestamp.toNumber() * 1000).toLocaleString()}</td>
                       <td>
-                        <ExplorerLink 
-                          path={`account/${entry.account.owner}`} 
-                          label={ellipsify(entry.account.owner.toString())} 
+                        <ExplorerLink
+                          path={`account/${entry.account.owner}`}
+                          label={ellipsify(entry.account.owner.toString())}
                         />
                       </td>
                     </tr>
@@ -257,27 +270,46 @@ export function ProductDetails({ productId }: { productId: string }) {
             <div>
               <p>Report any issues or discrepancies with this product's information.</p>
             </div>
-            <button 
-              className="btn btn-outline btn-warning" 
+            <button
+              className="btn btn-outline btn-warning"
               onClick={() => setIsDisputeOpen(true)}
             >
               Report Issue
             </button>
           </div>
-          
+
           <div className="mt-4">
-            <button 
+            <button
               className="btn btn-outline btn-primary"
-              onClick={() => toast("Ownership Certificate feature will be implemented soon!", {
-                position: "top-center",
-                duration: 5000,
-                style: {
-                  borderRadius: '10px',
-                  background: '#333',
-                  color: '#fff',
-                  fontWeight: 'bold',
-                }
-              })}
+              onClick={() => toast.custom((t) => (
+                <div
+                  className={`${t.visible ? 'animate-enter' : 'animate-leave'
+                    } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                >
+                  <div className="flex-1 w-0 p-4">
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 pt-0.5">
+                      </div>
+                      <div className="ml-3 flex-1">
+                        <p className="text-sm font-medium text-gray-900">
+                          Ownership Certificate Update
+                        </p>
+                        <p className="mt-1 text-sm text-gray-500">
+                          The ownership certificate feature will be implemented in the future!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex border-l border-gray-200">
+                    <button
+                      onClick={() => toast.dismiss(t.id)}
+                      className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              ))}
             >
               Download Ownership Certificate
             </button>
@@ -312,51 +344,51 @@ export function ProductDetails({ productId }: { productId: string }) {
                 <label className="label">
                   <span className="label-text">Issue Title</span>
                 </label>
-                <input 
-                  type="text" 
-                  name="title" 
-                  value={disputeData.title} 
+                <input
+                  type="text"
+                  name="title"
+                  value={disputeData.title}
                   onChange={handleDisputeChange}
-                  className="input input-bordered" 
-                  required 
+                  className="input input-bordered"
+                  required
                 />
               </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Description</span>
                 </label>
-                <textarea 
-                  name="description" 
-                  value={disputeData.description} 
+                <textarea
+                  name="description"
+                  value={disputeData.description}
                   onChange={handleDisputeChange}
-                  className="textarea textarea-bordered" 
-                  required 
+                  className="textarea textarea-bordered"
+                  required
                 />
               </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Supporting Evidence</span>
                 </label>
-                <textarea 
-                  name="evidence" 
-                  value={disputeData.evidence} 
+                <textarea
+                  name="evidence"
+                  value={disputeData.evidence}
                   onChange={handleDisputeChange}
-                  className="textarea textarea-bordered" 
+                  className="textarea textarea-bordered"
                   placeholder="Provide links or descriptions of evidence"
                 />
               </div>
               <div className="modal-action">
                 <button type="submit" className="btn btn-primary">Submit</button>
-                <button 
-                  type="button" 
-                  className="btn btn-ghost" 
+                <button
+                  type="button"
+                  className="btn btn-ghost"
                   onClick={() => setIsDisputeOpen(false)}
                 >
                   Cancel
                 </button>
               </div>
             </form>
-            </div>
+          </div>
         </div>
       )}
     </div>

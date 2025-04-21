@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react'
 import { ellipsify } from '../ui/ui-layout'
 import { ExplorerLink } from '../cluster/cluster-ui'
 import { useSologProgram, useProductAccount } from './solog-data-access'
+import Image from 'next/image'
+import loadingLogo from '../../../public/images/loading-final.svg'
 
 export function CreateProductForm() {
   const { createProduct } = useSologProgram()
@@ -106,7 +108,31 @@ export function ProductList() {
   const { products, getProgramAccount } = useSologProgram()
 
   if (getProgramAccount.isLoading) {
-    return <span className="loading loading-spinner loading-lg"></span>
+    return (
+      <div className='flex justify-center items-center'>
+        <div className='w-80 h-80'>
+          <Image
+            alt='Solog Loading Logo'
+            priority
+            src={loadingLogo}
+          />
+        </div>
+        <div className='w-80 h-80'>
+          <Image
+            alt='Solog Loading Logo'
+            priority
+            src={loadingLogo}
+          />
+        </div>
+        <div className='w-80 h-80'>
+          <Image
+            alt='Solog Loading Logo'
+            priority
+            src={loadingLogo}
+          />
+        </div>
+      </div>
+    )
   }
 
   if (!getProgramAccount.data?.value) {
@@ -125,10 +151,10 @@ export function ProductList() {
       ) : products.data?.length ? (
         <div className="grid md:grid-cols-2 gap-4">
           {products.data?.map((product) => (
-            <ProductCard 
-              key={product.publicKey.toString()} 
-              productId={product.account.productId} 
-              productPDA={product.publicKey} 
+            <ProductCard
+              key={product.publicKey.toString()}
+              productId={product.account.productId}
+              productPDA={product.publicKey}
               data={product.account}
             />
           ))}
@@ -143,8 +169,8 @@ export function ProductList() {
   )
 }
 
-function ProductCard({ productId, productPDA, data }: { 
-  productId: string, 
+function ProductCard({ productId, productPDA, data }: {
+  productId: string,
   productPDA: PublicKey,
   data: any
 }) {
@@ -188,13 +214,13 @@ function ProductDetailsButton({ productId }: { productId: string }) {
 }
 
 export function ProductDetails({ productId }: { productId: string }) {
-  const { 
-    productQuery, 
-    productJournalEntries, 
-    addJournalEntry, 
-    transferProduct, 
-    markDelivered, 
-    deactivateProduct 
+  const {
+    productQuery,
+    productJournalEntries,
+    addJournalEntry,
+    transferProduct,
+    markDelivered,
+    deactivateProduct
   } = useProductAccount({ productId })
 
   const [journalFormData, setJournalFormData] = useState({
@@ -297,7 +323,15 @@ export function ProductDetails({ productId }: { productId: string }) {
   }
 
   if (productQuery.isLoading) {
-    return <span className="loading loading-spinner loading-lg"></span>
+    return (
+      <div className='flex justify-center items-center'>
+        <Image
+          alt='Solog Loading Logo'
+          priority
+          src={loadingLogo}
+        />
+      </div>
+    )
   }
 
   if (!productQuery.data) {
@@ -316,7 +350,7 @@ export function ProductDetails({ productId }: { productId: string }) {
         <div className="card-body">
           <h2 className="card-title text-2xl">{product.name}</h2>
           <div className="badge badge-lg badge-primary">{product.currentStatus}</div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div>
               <h3 className="font-bold">Product Details</h3>
@@ -336,34 +370,34 @@ export function ProductDetails({ productId }: { productId: string }) {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h3 className="font-bold">Ownership Information</h3>
               <div className="mt-4 space-y-2">
                 <div>
                   <span className="font-bold">Current Owner:</span>
                   <div className="mt-1">
-                    <ExplorerLink 
-                      path={`account/${product.currentOwner}`} 
-                      label={ellipsify(product.currentOwner.toString())} 
+                    <ExplorerLink
+                      path={`account/${product.currentOwner}`}
+                      label={ellipsify(product.currentOwner.toString())}
                     />
                   </div>
                 </div>
                 <div>
                   <span className="font-bold">Creator:</span>
                   <div className="mt-1">
-                    <ExplorerLink 
-                      path={`account/${product.creator}`} 
-                      label={ellipsify(product.creator.toString())} 
+                    <ExplorerLink
+                      path={`account/${product.creator}`}
+                      label={ellipsify(product.creator.toString())}
                     />
                   </div>
                 </div>
                 <div>
                   <span className="font-bold">Product Address:</span>
                   <div className="mt-1">
-                    <ExplorerLink 
-                      path={`account/${productQuery.data ? productQuery.data.publicKey : ''}`} 
-                      label={ellipsify(productQuery.data ? productQuery.data.publicKey.toString() : '')} 
+                    <ExplorerLink
+                      path={`account/${productQuery.data ? productQuery.data.publicKey : ''}`}
+                      label={ellipsify(productQuery.data ? productQuery.data.publicKey.toString() : '')}
                     />
                   </div>
                 </div>
@@ -376,7 +410,7 @@ export function ProductDetails({ productId }: { productId: string }) {
       <div className="card card-bordered border-base-300 border-4 bg-base-100">
         <div className="card-body">
           <h2 className="card-title">Journal Entries</h2>
-          
+
           {productJournalEntries.isLoading ? (
             <span className="loading loading-spinner loading-lg"></span>
           ) : productJournalEntries.data?.length ? (
@@ -404,9 +438,9 @@ export function ProductDetails({ productId }: { productId: string }) {
                       <td>{entry.account.location}</td>
                       <td>{new Date(entry.account.timestamp.toNumber() * 1000).toLocaleString()}</td>
                       <td>
-                        <ExplorerLink 
-                          path={`account/${entry.account.handler}`} 
-                          label={ellipsify(entry.account.handler.toString())} 
+                        <ExplorerLink
+                          path={`account/${entry.account.handler}`}
+                          label={ellipsify(entry.account.handler.toString())}
                         />
                       </td>
                     </tr>
@@ -424,7 +458,7 @@ export function ProductDetails({ productId }: { productId: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="card card-bordered border-base-300 border-4 bg-base-100">
             <div className="card-body">
-            <h2 className="card-title">Add Journal Entry</h2>
+              <h2 className="card-title">Add Journal Entry</h2>
               <form onSubmit={handleJournalSubmit} className="space-y-4">
                 <div className="form-control">
                   <label className="label">
