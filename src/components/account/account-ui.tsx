@@ -18,6 +18,7 @@ import {
 import toast from 'react-hot-toast'
 import Image from 'next/image'
 import loadingLogoMini from '../../../public/images/loading-final-mini.svg'
+import retryButton from '../../../public/images/retry-solog01.svg'
 
 export function AccountBalance({ address }: { address: PublicKey }) {
   const query = useGetBalance({ address })
@@ -124,7 +125,6 @@ export function AccountTokens({ address }: { address: PublicKey }) {
               </span>
             ) : (
               <button
-                className="btn btn-sm btn-outline"
                 onClick={async () => {
                   await query.refetch()
                   await client.invalidateQueries({
@@ -132,7 +132,10 @@ export function AccountTokens({ address }: { address: PublicKey }) {
                   })
                 }}
               >
-                <IconRefresh size={16} />
+                <Image
+                  src={retryButton}
+                  alt='Retry Button'
+                />
               </button>
             )}
           </div>
@@ -220,8 +223,11 @@ export function AccountTransactions({ address }: { address: PublicKey }) {
               </div>
             </span>
           ) : (
-            <button className="btn btn-sm btn-outline" onClick={() => query.refetch()}>
-              <IconRefresh size={16} />
+            <button onClick={() => query.refetch()}>
+              <Image
+                src={retryButton}
+                alt='Retry Button'
+              />
             </button>
           )}
         </div>
